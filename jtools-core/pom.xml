@@ -9,12 +9,12 @@
 	<parent>
 		<groupId>cn.moongoddess</groupId>
 		<artifactId>jtools</artifactId>
-		<version>1.0.0</version>
+		<version>1.0.1</version>
 	</parent>
 
 	<artifactId>jtools-core</artifactId>
 	<name>${project.artifactId}</name>
-	<description>javaTools核心</description>
+	<description>JTools核心包</description>
 
 	<properties>
 		<servlet-api.version>2.5</servlet-api.version>
@@ -27,64 +27,7 @@
 		<spring-expression.version>5.3.20</spring-expression.version>
 	</properties>
 	<dependencies>
-		<dependency>
-			<groupId>com.documents4j</groupId>
-			<artifactId>documents4j-local</artifactId>
-			<version>${documents4j.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.documents4j</groupId>
-			<artifactId>documents4j-transformer-msoffice-word</artifactId>
-			<version>${documents4j.version}</version>
-		</dependency>
 
-		<dependency>
-			<groupId>com.documents4j</groupId>
-			<artifactId>documents4j-transformer-msoffice-excel</artifactId>
-			<version>${documents4j.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>${servlet-api.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-web</artifactId>
-			<version>${spring-web.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-			<version>${spring-test.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpcore</artifactId>
-			<version>${httpcore.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-			<version>${commons-lang3.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
-			<version>${commons-io.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-expression</artifactId>
-			<version>${spring-expression.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>fastjson</artifactId>
-			<version>${fastjson.version}</version>
-		</dependency>
 	</dependencies>
 
 </project>
