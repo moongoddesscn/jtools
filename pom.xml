@@ -8,7 +8,7 @@
 
 	<groupId>cn.moongoddess</groupId>
 	<artifactId>jtools</artifactId>
-	<version>1.0.1</version>
+	<version>1.0.6</version>
 	<name>JTools</name>
 	<description>The Moon Goddess protects us and JTools will provide us with many conveniences</description>
 	<url>https://github.com/moongoddesscn/jtools.git</url>

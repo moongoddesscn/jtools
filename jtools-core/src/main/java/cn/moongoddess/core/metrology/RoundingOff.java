@@ -1,6 +1,8 @@
 package cn.moongoddess.core.metrology;
 
+import cn.moongoddess.core.model.RoundingParams;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 /**
  *  修约值算法
@@ -15,60 +17,39 @@ public class RoundingOff {
 	 * @param level 等级，支持（0.02，0.05，0.2，0.5，1，2）
 	 * @return 修约后的值
 	 */
-	public static String  getByValueAndLevel(String value, String level){
-		if (null == getRoundingCoefficient(level) || 0 == getRoundingDecimalPlace(level)) return null;
+	public String get(String value, String level){
+		RoundingParams rp;
+		switch (level) {
+			case "0.02":
+				rp = new RoundingParams("2", 3);
+				break;
+			case "0.05":
+				rp = new RoundingParams("5", 3);
+				break;
+			case "0.2":
+				rp = new RoundingParams("2", 2);
+				break;
+			case "0.5":
+				rp = new RoundingParams("5", 2);
+				break;
+			case "1":
+				rp = new RoundingParams("1", 1);
+				break;
+			case "2":
+				rp = new RoundingParams("2", 1);
+				break;
+			default:
+				rp = null;
+		}
+
+		if (rp == null) return null;
+
 		//四舍六入
 		BigDecimal multiply = new BigDecimal(value)
-				.divide(new BigDecimal(getRoundingCoefficient(level)))
-				.setScale(getRoundingDecimalPlace(level), BigDecimal.ROUND_HALF_EVEN)
-				.multiply(new BigDecimal(getRoundingCoefficient(level)));
-		return numDecimal(multiply.toString(), getRoundingDecimalPlace(level));
-	}
-
-	/**
-	 * 根据修约等级获取修约系数
-	 * @param level 等级
-	 * @return 修约系数
-	 */
-	public static String getRoundingCoefficient(String level) {
-		String coefficient;
-		switch (level) {
-			case "0.02":
-			case "0.2":
-			case "2":
-				coefficient = "2"; break;
-			case "0.05":
-			case "0.5":
-				coefficient = "5"; break;
-			case "1":
-				coefficient = "1"; break;
-			default:
-				coefficient = null; break;
-		}
-		return coefficient;
-	}
-
-	/**
-	 * 根据等级获取保留小数位数
-	 * @param level 等级
-	 * @return 小数位数
-	 */
-	public static int getRoundingDecimalPlace(String level) {
-		int decimalPlace;
-		switch (level) {
-			case "0.02":
-			case "0.05":
-				decimalPlace = 3; break;
-			case "0.2":
-			case "0.5":
-				decimalPlace = 2; break;
-			case "1":
-			case "2":
-				decimalPlace = 1; break;
-			default:
-				decimalPlace = 0; break;
-		}
-		return decimalPlace;
+				.divide(new BigDecimal(rp.getCoefficient()))
+				.setScale(rp.getDecimalPlace(), RoundingMode.HALF_EVEN)
+				.multiply(new BigDecimal(rp.getCoefficient()));
+		return numDecimal(multiply.toString(), rp.getDecimalPlace());
 	}
 
 	/**
@@ -77,20 +58,23 @@ public class RoundingOff {
 	 * @param len 保留几位小数
 	 * @return 处理小数后的值
 	 */
-	public static String numDecimal(String num, int len) {
+	private String numDecimal(String num, int len) {
 		if (len==0) return num.split("\\.")[0];
 		String decimal;
-		if (num.indexOf(".") == -1 && len!=0) num += ".0";
+		if (!num.contains(".")) num += ".0";
 		String[] split = num.split("\\.");
 		decimal = split[1];
 		num = split[0];
 		if (decimal.length()>len){
 			decimal = decimal.substring(0,len);
+			return num + "." + decimal;
 		}else {
+			StringBuilder builder = new StringBuilder();
+			builder.append(decimal);
 			while (decimal.length() != len){
-				decimal += "0";
+				builder.append("0");
 			}
+			return num + "." + builder;
 		}
-		return num + "." + decimal;
 	}
 }
